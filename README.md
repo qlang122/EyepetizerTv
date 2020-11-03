@@ -2,8 +2,9 @@
 
 ### 只实现了视频的item ###
     + 因为只需要看视频，其他的就不写了
-    ![device-2020-11-03-184210.png](screenshot/device-2020-11-03-184210.png "device-2020-11-03-184210.png")
-    ![device-2020-11-03-184416.png](screenshot/device-2020-11-03-184416.png "device-2020-11-03-184416.png")
+    
+![device-2020-11-03-184210.png](screenshot/device-2020-11-03-184210.png "device-2020-11-03-184210.png")
+![device-2020-11-03-184416.png](screenshot/device-2020-11-03-184416.png "device-2020-11-03-184416.png")
     
 ### 声明： ###
     + 接口和资源归最终所属公司所有
