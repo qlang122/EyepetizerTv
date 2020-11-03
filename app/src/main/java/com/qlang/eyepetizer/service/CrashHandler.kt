@@ -151,7 +151,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
             val fileName = "$nameString.log"
             if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
                 val path = Environment.getExternalStorageDirectory().absolutePath
-                val dir = File(path + File.separator + "nextstage")
+                val dir = File(path + File.separator + "qlang")
                 if (!dir.exists()) {
                     dir.mkdirs()
                 }

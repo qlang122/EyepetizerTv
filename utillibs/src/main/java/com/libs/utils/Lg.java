@@ -174,9 +174,9 @@ public class Lg {
                 File logFile = null;
                 try {
                     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                        file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "nextstage");
+                        file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logs");
                     } else {
-                        file = new File("mnt" + File.separator + "nextstage");
+                        file = new File("mnt" + File.separator + "logs");
                     }
                     if (!file.exists()) {
                         file.mkdirs();
