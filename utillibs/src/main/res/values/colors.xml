@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffff</color>
+    <color name="lightBlackColor">#333</color>
+    <color name="reveal_color">#1000</color>
+    <color name="home_page_line_color">#DBDBDB</color>
+    <color name="pageNumberColor">#CCFFFFFF</color>
+</resources>

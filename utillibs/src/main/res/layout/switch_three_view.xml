@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sv_container"
+    android:layout_width="230dip"
+    android:layout_height="38dip"
+    android:background="@color/white">
+
+    <ImageButton
+        android:id="@+id/iv_switch_cursor"
+        android:layout_width="120dip"
+        android:layout_height="36dip"
+        android:layout_centerVertical="true"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/switch_text_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="aa"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/switch_text_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="bb"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/switch_text_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="cc"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>

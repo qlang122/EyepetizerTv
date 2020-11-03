@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwitchView">
+        <attr name="textTrue" format="string" />
+        <attr name="textFalse" format="string" />
+        <attr name="textCenter" format="string" />
+        <attr name="container_hight" format="dimension" />
+        <attr name="container_width" format="dimension" />
+        <attr name="cursor_hight" format="dimension" />
+        <attr name="cursor_width" format="dimension" />
+        <attr name="cursor_background" format="reference|color" />
+        <attr name="container_background" format="reference|color" />
+        <attr name="textSize" />
+    </declare-styleable>
+
+    <attr name="textSize" format="dimension" />
+
+    <declare-styleable name="ClockView">
+        <attr name="num_model" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="terse" value="1" />
+        </attr>
+        <attr name="hand_second" format="reference" />
+        <attr name="hand_minute" format="reference" />
+        <attr name="hand_hour" format="reference" />
+        <attr name="hand_second_width" format="dimension" />
+        <attr name="hand_minute_width" format="dimension" />
+        <attr name="hand_hour_width" format="dimension" />
+        <attr name="clock_background" format="reference" />
+        <attr name="centre_point" format="reference" />
+        <attr name="textSize" />
+        <attr name="textColor" format="reference|color" />
+        <attr name="textTopOffset" format="dimension" />
+    </declare-styleable>
+</resources>

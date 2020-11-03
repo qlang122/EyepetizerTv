@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@color/colorPrimary"
+    android:minHeight="?attr/actionBarSize">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentInsetStart="0dp"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <RelativeLayout
+            android:id="@+id/rl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/main_left_right_space"
+            android:paddingRight="@dimen/main_left_right_space">
+
+            <TextView
+                android:id="@+id/btn_toolBar_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_toolBar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_large"
+                tools:text="" />
+
+            <TextView
+                android:id="@+id/btn_toolBar_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone"
+                tools:text="" />
+
+            <TextView
+                android:id="@+id/btn_toolBar_right2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@id/btn_toolBar_right"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize_normal"
+                android:visibility="gone"
+                tools:text="" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>

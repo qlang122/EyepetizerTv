@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dp_10">10dp</dimen>
+
+    <dimen name="indicator_radius">4dp</dimen>
+    <dimen name="indicator_inner_radius">4dp</dimen>
+    <dimen name="indicator_space">8dp</dimen>
+    <dimen name="indicator_stroke_width">1dp</dimen>
+
+
+</resources>
