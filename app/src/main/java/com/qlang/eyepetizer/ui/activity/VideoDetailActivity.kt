@@ -57,7 +57,7 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
 
     private var focusEntity = FocusEntity<Any>()
     private val focusListener = View.OnFocusChangeListener { v, hasFocus ->
-        if (hasFocus) if (hasFocus) focusEntity.setCurrent(v)
+        if (hasFocus) focusEntity.setCurrent(v)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
