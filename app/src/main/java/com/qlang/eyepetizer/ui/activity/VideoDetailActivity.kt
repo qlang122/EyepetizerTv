@@ -218,11 +218,11 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
             var curr = currentPositionWhenPlaying
             when (action) {
                 1 -> {
-                    if (curr > 0) curr -= 5000;if (curr < 0) curr = 0
+                    if (curr > 0) curr -= 10000;if (curr < 0) curr = 0
                     seekTo(curr.toLong())
                 }
                 2 -> {
-                    if (curr < total) curr += 5000;if (curr > total) curr = total
+                    if (curr < total) curr += 10000;if (curr > total) curr = total
                     seekTo(curr.toLong())
                 }
             }

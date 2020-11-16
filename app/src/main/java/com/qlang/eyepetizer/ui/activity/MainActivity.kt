@@ -191,6 +191,8 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
         if (focusEntity.value != null) {
             rv_title?.layoutManager?.findViewByPosition(currFocusTab.position)?.requestFocus()
             unHasFocusEntity.clear()
+        } else if (currFocusTab.position != 1) {
+            rv_title?.layoutManager?.findViewByPosition(1)?.requestFocus()
         } else {
             if (System.currentTimeMillis() - lastPressBackTime > 1500) {
                 showToast("再按一次退出")
