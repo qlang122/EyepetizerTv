@@ -11,8 +11,11 @@ import com.qlang.eyepetizer.base.BaseAdapter
 import com.qlang.eyepetizer.base.ViewHolder
 import com.qlang.eyepetizer.bean.*
 import com.qlang.eyepetizer.net.loadImg
+import com.xiaweizi.marquee.MarqueeTextView
 
 class HomeListAdapter(context: Context, val list: List<BaseInfo>) : BaseAdapter<BaseInfo>(context) {
+    private val marqueeTextView = MarqueeTextView(context)
+
     override fun getLayoutResource(): Int = R.layout.item_empty
 
     override fun getItemViewType(position: Int): Int {
@@ -141,6 +144,9 @@ class HomeListAdapter(context: Context, val list: List<BaseInfo>) : BaseAdapter<
                     listener?.invoke(position, it, data)
                 }
                 setOnFocusChangeListener { v, hasFocus ->
+                    findView(R.id.tv_title, marqueeTextView)?.apply {
+                        if (hasFocus) startScroll() else stopScroll()
+                    }
                     focusListener?.invoke(position, v, hasFocus, data)
                 }
             }

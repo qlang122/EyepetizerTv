@@ -83,10 +83,11 @@
         android:id="@+id/bottom_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:max="100"
-        android:progressDrawable="@drawable/layerlist_video_progress_bg" />
+        android:progressDrawable="@drawable/layerlist_video_progress_bg"
+        tools:progress="50" />
 
     <ImageView
         android:id="@+id/back_tiny"

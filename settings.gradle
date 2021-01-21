@@ -1,1 +1,1 @@
-include ':app', ':utillibs', ':tvwidget'
+include ':app', ':utillibs', ':tvwidget', ':marquee'

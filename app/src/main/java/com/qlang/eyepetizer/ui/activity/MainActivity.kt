@@ -168,12 +168,11 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
                 info = value.data?.toLocalVideoInfo()
             }
             is DailyInfo, is FollowInfo -> {
-                val followCard = when (value) {
+                info = when (value) {
                     is DailyInfo -> value.data?.content?.data
                     is FollowInfo -> value.data?.content?.data
                     else -> null
-                }
-                info = followCard?.toLocalVideoInfo()
+                }?.toLocalVideoInfo()
             }
         }
 
