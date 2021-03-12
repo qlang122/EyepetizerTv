@@ -95,11 +95,11 @@ class LaunchActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    private fun checkPermission(permissions: List<String>): String {
+    private fun checkPermission(list: List<String>): String {
         val buffer = StringBuffer()
-        permissions.any { permissions[0] == it }.also { if (it) buffer.append("需要存储权限存入照片！\n") }
-        permissions.any { permissions[1] == it }.also { if (it) buffer.append("需要存储权限读取照片！\n") }
-        permissions.any { permissions[2] == it }.also { if (it) buffer.append("需要读取设备状态权限！\n") }
+        list.any { permissions[0] == it }.also { if (it) buffer.append("需要存储权限存入照片！\n") }
+        list.any { permissions[1] == it }.also { if (it) buffer.append("需要存储权限读取照片！\n") }
+        list.any { permissions[2] == it }.also { if (it) buffer.append("需要读取设备状态权限！\n") }
         return buffer.toString()
     }
 }
