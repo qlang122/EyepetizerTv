@@ -110,11 +110,12 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.xiaweizi.marquee.MarqueeTextView
                         android:id="@+id/tv_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
+                        android:ellipsize="marquee"
+                        android:focusable="false"
                         android:shadowColor="#333"
                         android:shadowDx="1"
                         android:shadowDy="1"
@@ -122,6 +123,8 @@
                         android:singleLine="true"
                         android:textColor="@color/white"
                         android:textSize="18sp"
+                        app:scroll_first_delay="0"
+                        app:scroll_mode="mode_once"
                         tools:text="广告裁判" />
 
                     <TextView

@@ -9,8 +9,11 @@ import com.qlang.eyepetizer.base.BaseAdapter
 import com.qlang.eyepetizer.base.ViewHolder
 import com.qlang.eyepetizer.bean.*
 import com.qlang.eyepetizer.net.loadImg
+import com.xiaweizi.marquee.MarqueeTextView
 
 class VideoDetailRelatedAdapter(context: Context, val list: List<VideoRelated>) : BaseAdapter<VideoRelated>(context) {
+    private val marqueeTextView = MarqueeTextView(context)
+
     override fun getLayoutResource() = R.layout.item_empty
 
     override fun getItemViewType(position: Int): Int {
@@ -74,6 +77,9 @@ class VideoDetailRelatedAdapter(context: Context, val list: List<VideoRelated>) 
                     listener?.invoke(position, it, data)
                 }
                 setOnFocusChangeListener { v, hasFocus ->
+                    findView(R.id.tv_title, marqueeTextView)?.apply {
+                        if (hasFocus) startScroll() else stopScroll()
+                    }
                     focusListener?.invoke(position, v, hasFocus, data)
                 }
             }

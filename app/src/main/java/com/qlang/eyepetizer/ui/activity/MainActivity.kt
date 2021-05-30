@@ -19,6 +19,7 @@ import com.qlang.tvwidget.AutoFocusGridLayoutManager
 import com.qlang.tvwidget.BorderEffect
 import com.qlang.tvwidget.BorderView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.delay
 
 class MainActivity : BaseVMActivity<MainViewModel>() {
     private var lastPressBackTime = 0L
@@ -191,7 +192,10 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
             rv_title?.layoutManager?.findViewByPosition(currFocusTab.position)?.requestFocus()
             unHasFocusEntity.clear()
         } else if (currFocusTab.position != 1) {
-            rv_title?.layoutManager?.findViewByPosition(1)?.requestFocus()
+            rv_title?.smoothScrollToPosition(0)
+            execAsync({ delay(100) }, {
+                rv_title?.layoutManager?.findViewByPosition(1)?.requestFocus()
+            })
         } else {
             if (System.currentTimeMillis() - lastPressBackTime > 1500) {
                 showToast("再按一次退出")

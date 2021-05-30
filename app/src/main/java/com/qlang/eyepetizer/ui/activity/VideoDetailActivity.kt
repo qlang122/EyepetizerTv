@@ -88,18 +88,22 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         GSYVideoADManager.releaseAllVideos()
         orientationUtils?.releaseListener()
         videoPlayer.release()
         videoPlayer.setVideoAllCallBack(null)
         globalJob.cancel()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
             btn_full?.requestFocus()
             isFullVideo = false
+            return
+        }
+        if (!btn_full.isFocused) {
+            btn_full.requestFocus()
             return
         }
         super.onBackPressed()
