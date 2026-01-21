@@ -8,6 +8,7 @@ import com.qlang.eyepetizer.ktx.execAsync
 import com.qlang.eyepetizer.mvvm.BaseViewModel
 import com.qlang.eyepetizer.net.api.IApi
 import com.qlang.eyepetizer.net.model.MainNet
+import kotlinx.coroutines.delay
 
 class MainViewModel : BaseViewModel() {
     private val net by lazy { MainNet() }
@@ -204,15 +205,16 @@ class MainViewModel : BaseViewModel() {
         if (currPage != tab.tag) {
             currPage = tab.tag
             execAsync({
-                while (recyclerView?.isComputingLayout == true) {
-                }
-            }, {
                 synchronized(datasLock) {
                     datas.clear()
                     datasMap[currPage]?.let { datas.addAll(it) }
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
-            })
+            }) {
+                while (recyclerView?.isComputingLayout == true) {
+                    delay(1)
+                }
+            }
 
             if (!datasMap.containsKey(currPage)) {
                 currPageUrlsMap[currPage] = tab.pageUrl

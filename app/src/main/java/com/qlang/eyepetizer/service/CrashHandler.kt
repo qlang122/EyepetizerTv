@@ -196,10 +196,9 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
         map["code"] = 9
         map["message"] = msg
 
-        execAsync({
-            DeviceNet().uploadErrLog(map)
-        }, {
-            if (0 == it.value?.code) {
+        execAsync {
+            val result = DeviceNet().uploadErrLog(map)
+            if (0 == result?.value?.code) {
                 //清空文件
                 try {
                     val fos = FileOutputStream(file, false)
@@ -209,7 +208,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
                     e.printStackTrace()
                 }
             }
-        })
+        }
     }
 
     companion object {

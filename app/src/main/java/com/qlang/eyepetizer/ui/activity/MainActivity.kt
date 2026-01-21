@@ -143,13 +143,14 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
         viewModel.dataUiState.observe(this) {
             it.t?.let { data ->
                 execAsync({
-                    while (binding?.rvList?.isComputingLayout == true) {
-                    }
-                }, {
                     if (data.currPage != viewModel.currPage) {
                         listAdapter?.notifyDataSetChanged()
                     } else listAdapter?.notifyItemRangeChanged(data.oldCount, data.currCount)
-                }, this)
+                }, this) {
+                    while (binding?.rvList?.isComputingLayout == true) {
+                        delay(1)
+                    }
+                }
             }
         }
     }
@@ -215,9 +216,9 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
             unHasFocusEntity.clear()
         } else if (currFocusTab.position != 1) {
             binding?.rvTitle?.smoothScrollToPosition(0)
-            execAsync({ delay(100) }, {
+            execAsync({
                 binding?.rvTitle?.layoutManager?.findViewByPosition(1)?.requestFocus()
-            })
+            }) { delay(100) }
         } else {
             if (System.currentTimeMillis() - lastPressBackTime > 1500) {
                 showToast("再按一次退出")
