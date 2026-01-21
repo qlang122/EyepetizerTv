@@ -1,15 +1,18 @@
 package com.qlang.eyepetizer.ui.activity
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.ViewTreeObserver
-import androidx.lifecycle.Observer
+import androidx.activity.addCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.qlang.eyepetizer.R
 import com.qlang.eyepetizer.bean.*
+import com.qlang.eyepetizer.databinding.ActivityMainBinding
 import com.qlang.eyepetizer.ktx.execAsync
 import com.qlang.eyepetizer.model.MainViewModel
 import com.qlang.eyepetizer.mvvm.BaseVMActivity
@@ -18,10 +21,9 @@ import com.qlang.eyepetizer.ui.adapter.TabTitleAdapter
 import com.qlang.tvwidget.AutoFocusGridLayoutManager
 import com.qlang.tvwidget.BorderEffect
 import com.qlang.tvwidget.BorderView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.delay
 
-class MainActivity : BaseVMActivity<MainViewModel>() {
+class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
     private var lastPressBackTime = 0L
 
     private var listAdapter: HomeListAdapter? = null
@@ -42,11 +44,22 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
         }
     }
 
+    private var isLandScreen = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun getContentLayoutId() = R.layout.activity_main
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val isLand = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        if (isLandScreen != isLand) {
+            isLandScreen = isLand
+            binding?.rvList?.layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 3 else 1)
+        }
+    }
 
     override fun initView() {
         currFocusTab = FocusEntity(viewModel.tabTitles[1]).apply { position = 1 }//默认选中的tab
@@ -61,7 +74,7 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
             }
             setHasStableIds(true)
         }
-        rv_title?.apply {
+        binding?.rvTitle?.run {
             isFocusable = false
             layoutManager = AutoFocusGridLayoutManager(context, 1, LinearLayoutManager.HORIZONTAL, false)
             adapter = TabTitleAdapter(this@MainActivity, viewModel.tabTitles).apply {
@@ -73,21 +86,23 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
                             unHasFocusEntity.clear()
                         } else {
                             currFocusTab.setCurrent(t, position)
-                            viewModel.changeTab(currFocusTab.value, rv_list)
+                            viewModel.changeTab(currFocusTab.value, binding?.rvList)
                         }
                     }
                 }
             }
-            viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     layoutManager?.findViewByPosition(1)?.requestFocus()
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    viewBorder.attachTo(rv_list)
+                    viewBorder.attachTo(binding?.rvList)
                 }
             })
         }
-        rv_list?.apply {
-            layoutManager = AutoFocusGridLayoutManager(context, 3).also {
+        binding?.rvList?.run {
+            isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 3 else 1).apply {
                 //                it.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 //                    override fun getSpanSize(position: Int): Int {
 //                        return when (listAdapter?.getItemViewType(position)) {
@@ -113,8 +128,11 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
                 }
             })
         }
-        //日期：2020-10-27 点击：2144
-        viewBorder2.attachTo(rv_title)
+        viewBorder2.attachTo(binding?.rvTitle)
+
+        onBackPressedDispatcher.addCallback(this) {
+            doBack()
+        }
 
         viewModel.onInit(currFocusTab.value)
     }
@@ -122,17 +140,18 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
     override fun bindVM(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun observe() {
-        viewModel.dataUiState.observe(this, Observer {
+        viewModel.dataUiState.observe(this) {
             it.t?.let { data ->
                 execAsync({
-                    while (rv_list.isComputingLayout) {
+                    while (binding?.rvList?.isComputingLayout == true) {
                     }
                 }, {
-                    if (data.currPage != viewModel.currPage) listAdapter?.notifyDataSetChanged()
-                    else listAdapter?.notifyItemRangeChanged(data.oldCount, data.currCount)
+                    if (data.currPage != viewModel.currPage) {
+                        listAdapter?.notifyDataSetChanged()
+                    } else listAdapter?.notifyItemRangeChanged(data.oldCount, data.currCount)
                 }, this)
             }
-        })
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -147,12 +166,14 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 val pos = focusEntity.position
                 if (pos < 3) {//焦点在第一排时
-                    rv_title?.layoutManager?.findViewByPosition(currFocusTab.position)?.requestFocus()
+                    binding?.rvTitle?.layoutManager?.findViewByPosition(currFocusTab.position)
+                        ?.requestFocus()
                     return true
                 }
             }
+            KeyEvent.KEYCODE_BACK,
             KeyEvent.KEYCODE_ESCAPE -> {
-                onBackPressed();return true
+                doBack();return true
             }
         }
         return if (event == null) false else super.onKeyDown(keyCode, event)
@@ -187,14 +208,15 @@ class MainActivity : BaseVMActivity<MainViewModel>() {
         super.onDestroy()
     }
 
-    override fun onBackPressed() {
+    private fun doBack() {
         if (focusEntity.value != null) {
-            rv_title?.layoutManager?.findViewByPosition(currFocusTab.position)?.requestFocus()
+            binding?.rvTitle?.layoutManager?.findViewByPosition(currFocusTab.position)
+                ?.requestFocus()
             unHasFocusEntity.clear()
         } else if (currFocusTab.position != 1) {
-            rv_title?.smoothScrollToPosition(0)
+            binding?.rvTitle?.smoothScrollToPosition(0)
             execAsync({ delay(100) }, {
-                rv_title?.layoutManager?.findViewByPosition(1)?.requestFocus()
+                binding?.rvTitle?.layoutManager?.findViewByPosition(1)?.requestFocus()
             })
         } else {
             if (System.currentTimeMillis() - lastPressBackTime > 1500) {

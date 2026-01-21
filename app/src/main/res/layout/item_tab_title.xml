@@ -5,10 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:focusable="true"
-    android:paddingStart="12dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="12dp"
-    android:paddingBottom="8dp">
+    android:focusableInTouchMode="true"
+    android:padding="@dimen/main_title_item_padding">
 
     <CheckBox
         android:id="@+id/cb_txt"
@@ -18,16 +16,25 @@
         android:button="@null"
         android:enabled="false"
         android:focusable="false"
-        android:paddingStart="20dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="8dp"
+        android:paddingStart="@dimen/main_title_item_left_right_padding"
+        android:paddingTop="@dimen/main_title_item_top_bottom_padding"
+        android:paddingEnd="@dimen/main_title_item_left_right_padding"
+        android:paddingBottom="@dimen/main_title_item_top_bottom_padding"
         android:shadowColor="#646464"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@drawable/tab_title_focus_txt_color"
-        android:textSize="20sp"
+        android:textSize="@dimen/textSize_16sp"
         tools:checked="true"
         tools:text="TITLE" />
+
+    <View
+        android:id="@+id/v_click_mask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/cb_txt"
+        android:layout_alignTop="@+id/cb_txt"
+        android:layout_alignEnd="@+id/cb_txt"
+        android:layout_alignBottom="@+id/cb_txt" />
 </RelativeLayout>

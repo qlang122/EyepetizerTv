@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_home_bg"
+        android:clipToPadding="false"
+        android:focusable="false"
+        tools:context=".ui.activity.VideoDetailActivity">
+
+        <ImageView
+            android:id="@+id/iv_blurredBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:scaleType="fitXY"
+            tools:src="@drawable/img_home_bg" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#46000000"
+            android:focusable="false" />
+
+        <com.qlang.tvwidget.TvRelativeLayout
+            android:id="@+id/ly_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/main_body_left_right_margin"
+            android:layout_marginTop="@dimen/main_body_left_right_margin"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:paddingHorizontal="@dimen/main_list_item_left_right_margin"
+            android:paddingTop="@dimen/video_detail_list_item_left_right_margin">
+
+            <RelativeLayout
+                android:id="@+id/ly_player"
+                android:layout_width="@dimen/video_detail_player_width"
+                android:layout_height="@dimen/video_detail_player_land_height"
+                android:background="@drawable/video_focus_border_bg"
+                android:focusable="true"
+                android:padding="2dp">
+
+                <com.qlang.eyepetizer.views.MyGsyVideoPlayer
+                    android:id="@+id/videoPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false" />
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/ly_info"
+                layout="@layout/item_video_detail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/ly_player" />
+
+            <TextView
+                android:id="@+id/btn_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ly_info"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toEndOf="@id/ly_player"
+                android:background="@drawable/btn_bg_blue_circular"
+                android:drawableLeft="@drawable/ic_video_max"
+                android:drawablePadding="8dp"
+                android:focusable="true"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="全屏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_16sp">
+
+                <requestFocus />
+            </TextView>
+
+            <TextView
+                android:id="@+id/btn_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/btn_full"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/sl_btn_focus_circular"
+                android:drawableLeft="@drawable/ic_add_white_20dp"
+                android:drawablePadding="1dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:text="关注"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+
+            <TextView
+                android:id="@+id/btn_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/btn_follow"
+                android:layout_marginStart="18dp"
+                android:layout_toStartOf="@id/btn_follow"
+                android:background="@drawable/sl_btn_focus_circular"
+                android:drawableLeft="@drawable/ic_star_white_20dp"
+                android:drawablePadding="4dp"
+                android:focusable="true"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:text="收藏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+
+            <TextView
+                android:id="@+id/btn_cache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/btn_follow"
+                android:layout_toStartOf="@id/btn_favorites"
+                android:background="@drawable/sl_btn_focus_circular"
+                android:drawableLeft="@drawable/ic_cache_white_20dp"
+                android:drawablePadding="4dp"
+                android:focusable="true"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:text="缓存"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13sp" />
+        </com.qlang.tvwidget.TvRelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ly_head"
+            android:layout_alignParentEnd="true"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:paddingStart="@dimen/main_body_left_right_margin"
+            android:paddingTop="@dimen/main_body_top_margin"
+            android:paddingEnd="@dimen/main_body_left_right_margin"
+            android:paddingBottom="@dimen/main_body_top_margin"
+            android:scrollbars="none"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_follow_card_type_small" />
+
+    </RelativeLayout>
+</layout>

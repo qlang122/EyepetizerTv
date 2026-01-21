@@ -1,10 +1,7 @@
 package com.qlang.eyepetizer.model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.liveData
 import com.qlang.eyepetizer.bean.*
 import com.qlang.eyepetizer.mvvm.BaseViewModel
 import com.qlang.eyepetizer.net.model.MainNet
@@ -23,25 +20,15 @@ class VideoDetailViewModel : BaseViewModel() {
             _videoId = value
         }
 
-    private var videoDetailParams = MutableLiveData<String>()
-    private var relateParams = MutableLiveData<String>()
-
     var nextPageUrl: String? = null
 
-    val detailUiState: LiveData<UiState<Any>> = Transformations.switchMap(videoDetailParams) {
-        liveData {
-            val result = videoId?.let { id -> net.getVideoDetail(id) }
-            val value = result?.value
-            val succ = result?.isSuccess == true && value != null
-            if (succ) {
-                videoInfo = value?.toLocalVideoInfo()
-            }
-            emit(UiState<Any>())
-        }
-    }
+    private val _detailUiState: MutableLiveData<UiState<Any>> = MutableLiveData()
+    val detailUiState: LiveData<UiState<Any>> = _detailUiState
+    private val _relateUiState: MutableLiveData<UiState<Any>> = MutableLiveData()
+    val relateUiState: LiveData<UiState<Any>> = _relateUiState
 
-    val relateUiState: LiveData<UiState<Any>> = Transformations.switchMap(relateParams) {
-        liveData {
+    fun onInit() = launchIO {
+        videoId?.let {
             val result = videoId?.let { id -> net.getVideoRelated(id) }
             val value = result?.value
             val succ = result?.isSuccess == true && value != null
@@ -56,15 +43,19 @@ class VideoDetailViewModel : BaseViewModel() {
                     }
                 }
             }
-            emit(UiState<Any>(succ))
+            _relateUiState.postValue(UiState<Any>(succ))
         }
     }
 
-    fun onInit() {
-        videoId?.let { relateParams.value = "" }
-    }
-
-    fun getVideoDetail() {
-        videoId?.let { videoDetailParams.value = "" }
+    fun getVideoDetail() = launchIO {
+        videoId?.let {
+            val result = videoId?.let { id -> net.getVideoDetail(id) }
+            val value = result?.value
+            val succ = result?.isSuccess == true && value != null
+            if (succ) {
+                videoInfo = value?.toLocalVideoInfo()
+            }
+            _detailUiState.postValue(UiState<Any>())
+        }
     }
 }

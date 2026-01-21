@@ -11,4 +11,8 @@ abstract class BaseViewModel : ViewModel() {
     fun launchUI(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.Main) { block() }
     }
+
+    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) { block() }
+    }
 }

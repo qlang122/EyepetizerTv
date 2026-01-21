@@ -13,67 +13,41 @@ class MainViewModel : BaseViewModel() {
     private val net by lazy { MainNet() }
 
     val tabTitles: ArrayList<TabTitleInfo> = arrayListOf(
-            TabTitleInfo("发现", 0x100, IApi.DISCOVERY_URL),
-            TabTitleInfo("推荐", 0x101, IApi.HOME_RECOMMEND_URL),
-            TabTitleInfo("日报", 0x102, IApi.DAILY_URL),
-            TabTitleInfo("广告", 14, "${IApi.HOME_OTHER_URL}14"),
-            TabTitleInfo("生活", 36, "${IApi.HOME_OTHER_URL}36"),
-            TabTitleInfo("动画", 10, "${IApi.HOME_OTHER_URL}10"),
-            TabTitleInfo("搞笑", 28, "${IApi.HOME_OTHER_URL}28"),
-            TabTitleInfo("开胃", 4, "${IApi.HOME_OTHER_URL}4"),
-            TabTitleInfo("创意", 2, "${IApi.HOME_OTHER_URL}2"),
-            TabTitleInfo("运动", 18, "${IApi.HOME_OTHER_URL}18"),
-            TabTitleInfo("音乐", 20, "${IApi.HOME_OTHER_URL}20"),
-            TabTitleInfo("萌宠", 26, "${IApi.HOME_OTHER_URL}26"),
-            TabTitleInfo("剧情", 12, "${IApi.HOME_OTHER_URL}12"),
-            TabTitleInfo("科技", 32, "${IApi.HOME_OTHER_URL}32"),
-            TabTitleInfo("旅行", 6, "${IApi.HOME_OTHER_URL}6"),
-            TabTitleInfo("影视", 8, "${IApi.HOME_OTHER_URL}8"),
-            TabTitleInfo("记录", 22, "${IApi.HOME_OTHER_URL}22"),
-            TabTitleInfo("游戏", 30, "${IApi.HOME_OTHER_URL}30"),
-            TabTitleInfo("综艺", 38, "${IApi.HOME_OTHER_URL}38"),
-            TabTitleInfo("时尚", 24, "${IApi.HOME_OTHER_URL}24"),
-            TabTitleInfo("集锦", 34, "${IApi.HOME_OTHER_URL}34"))
+        TabTitleInfo("发现", 0x100, IApi.DISCOVERY_URL),
+        TabTitleInfo("推荐", 0x101, IApi.HOME_RECOMMEND_URL),
+        TabTitleInfo("日报", 0x102, IApi.DAILY_URL),
+        TabTitleInfo("广告", 14, "${IApi.HOME_OTHER_URL}14"),
+        TabTitleInfo("生活", 36, "${IApi.HOME_OTHER_URL}36"),
+        TabTitleInfo("动画", 10, "${IApi.HOME_OTHER_URL}10"),
+        TabTitleInfo("搞笑", 28, "${IApi.HOME_OTHER_URL}28"),
+        TabTitleInfo("开胃", 4, "${IApi.HOME_OTHER_URL}4"),
+        TabTitleInfo("创意", 2, "${IApi.HOME_OTHER_URL}2"),
+        TabTitleInfo("运动", 18, "${IApi.HOME_OTHER_URL}18"),
+        TabTitleInfo("音乐", 20, "${IApi.HOME_OTHER_URL}20"),
+        TabTitleInfo("萌宠", 26, "${IApi.HOME_OTHER_URL}26"),
+        TabTitleInfo("剧情", 12, "${IApi.HOME_OTHER_URL}12"),
+        TabTitleInfo("科技", 32, "${IApi.HOME_OTHER_URL}32"),
+        TabTitleInfo("旅行", 6, "${IApi.HOME_OTHER_URL}6"),
+        TabTitleInfo("影视", 8, "${IApi.HOME_OTHER_URL}8"),
+        TabTitleInfo("记录", 22, "${IApi.HOME_OTHER_URL}22"),
+        TabTitleInfo("游戏", 30, "${IApi.HOME_OTHER_URL}30"),
+        TabTitleInfo("综艺", 38, "${IApi.HOME_OTHER_URL}38"),
+        TabTitleInfo("时尚", 24, "${IApi.HOME_OTHER_URL}24"),
+        TabTitleInfo("集锦", 34, "${IApi.HOME_OTHER_URL}34")
+    )
 
     val currPageUrlsMap: MutableMap<Int, String?> = hashMapOf()
     var currPage: Int = 0x101//默认 "推荐"
 
     private val datasLock = Any()
-    var datas: MutableList<BaseInfo> = ArrayList()
+    val datas: MutableList<BaseInfo> = ArrayList()
     private val datasMap: MutableMap<Int, MutableList<BaseInfo>> = hashMapOf()
 
-    private val requestParams = MutableLiveData<String>()
-
-    inner class DatasRespone(var currPage: Int, var oldCount: Int, var currCount: Int) {
+    data class DatasResponse(var currPage: Int, var oldCount: Int, var currCount: Int) {
     }
 
-    val dataUiState: LiveData<UiState<DatasRespone>> = Transformations.switchMap(requestParams) {
-        liveData {
-            var succ = false
-            var count = 0
-            var curr = 0
-            val page = currPage
-            currPageUrlsMap[page]?.let { url ->
-                when (page) {
-                    0x100 -> getDiscoverData(url).apply {
-                        succ = first;count = second;curr = third
-                    }
-                    0x101 -> getHomeRecommendData(url).apply {
-                        succ = first;count = second;curr = third
-                    }
-                    0x102 -> getDailyData(url).apply {
-                        succ = first;count = second;curr = third
-                    }
-                    -1 -> ""
-                    else -> getCategoryData(url).apply {
-                        succ = first;count = second;curr = third
-                    }
-                }
-                ""
-            }
-            emit(UiState(succ, t = DatasRespone(page, count, curr)))
-        }
-    }
+    private val _dataUiState: MutableLiveData<UiState<DatasResponse>> = MutableLiveData()
+    val dataUiState: LiveData<UiState<DatasResponse>> = _dataUiState
 
     private suspend fun getCategoryData(url: String): Triple<Boolean, Int, Int> {
         var oldCount = 0
@@ -242,7 +216,7 @@ class MainViewModel : BaseViewModel() {
 
             if (!datasMap.containsKey(currPage)) {
                 currPageUrlsMap[currPage] = tab.pageUrl
-                requestParams.value = ""
+                getData()
             }
         }
     }
@@ -250,11 +224,39 @@ class MainViewModel : BaseViewModel() {
     fun onInit(tab: TabTitleInfo?) {
         tab ?: return
         currPage = tab.tag
-        if (!currPageUrlsMap.containsKey(tab.tag)) currPageUrlsMap[tab.tag] = tab.pageUrl
-        requestParams.value = ""
+        if (!currPageUrlsMap.containsKey(tab.tag)) {
+            currPageUrlsMap[tab.tag] = tab.pageUrl
+        }
+        getData()
     }
 
     fun loadMore() {
-        requestParams.value = ""
+        getData()
+    }
+
+    private fun getData() = launchIO {
+        var succ = false
+        var count = 0
+        var curr = 0
+        val page = currPage
+        currPageUrlsMap[page]?.let { url ->
+            when (page) {
+                0x100 -> getDiscoverData(url).apply {
+                    succ = first;count = second;curr = third
+                }
+                0x101 -> getHomeRecommendData(url).apply {
+                    succ = first;count = second;curr = third
+                }
+                0x102 -> getDailyData(url).apply {
+                    succ = first;count = second;curr = third
+                }
+                -1 -> ""
+                else -> getCategoryData(url).apply {
+                    succ = first;count = second;curr = third
+                }
+            }
+            ""
+        }
+        _dataUiState.postValue(UiState(succ, t = DatasResponse(page, count, curr)))
     }
 }

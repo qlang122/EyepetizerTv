@@ -26,7 +26,7 @@ class VideoDetailRelatedAdapter(context: Context, val list: List<VideoRelated>) 
         return when (viewType) {
             ItemType.FOLLOW_CARD,
             ItemType.VIDEO_SMALL_CARD -> FollowCardViewHolder(LayoutInflater.from(context).inflate(
-                    R.layout.item_follow_card_type2, parent, false))
+                    R.layout.item_follow_card_type_small, parent, false))
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }

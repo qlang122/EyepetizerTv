@@ -27,11 +27,17 @@ class HomeListAdapter(context: Context, val list: List<BaseInfo>) : BaseAdapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             ItemType.SQUARE_CARD_COLLECTION,
-            ItemType.HORIZONTAL_SCROLL_CARD -> HorizontalBannerViewHolder(LayoutInflater.from(context).inflate(
-                    R.layout.item_horizontal_scroll_card, parent, false))
+            ItemType.HORIZONTAL_SCROLL_CARD -> HorizontalBannerViewHolder(
+                LayoutInflater.from(context).inflate(
+                    R.layout.item_horizontal_scroll_card, parent, false
+                )
+            )
             ItemType.FOLLOW_CARD,
-            ItemType.VIDEO_SMALL_CARD -> FollowCardViewHolder(LayoutInflater.from(context).inflate(
-                    R.layout.item_follow_card_type, parent, false))
+            ItemType.VIDEO_SMALL_CARD -> FollowCardViewHolder(
+                LayoutInflater.from(context).inflate(
+                    R.layout.item_follow_card_type, parent, false
+                )
+            )
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }
@@ -41,7 +47,7 @@ class HomeListAdapter(context: Context, val list: List<BaseInfo>) : BaseAdapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = holder.adapterPosition.let { list[it] }
+        val data = list[position]
 
         holder.run {
             itemView.tag = position

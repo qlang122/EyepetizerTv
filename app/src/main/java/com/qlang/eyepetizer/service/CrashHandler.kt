@@ -29,8 +29,10 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
 
     // 系统默认的UncaughtException处理类
     private var mDefaultHandler: Thread.UncaughtExceptionHandler? = null
+
     // 程序的Context对象
     private var mContext: Context? = null
+
     // 用来存储设备信息和异常信息
     private val infos = HashMap<String, String>()
 
@@ -97,7 +99,7 @@ class CrashHandler private constructor() : Thread.UncaughtExceptionHandler {
             val pm = ctx!!.packageManager
             val pi = pm.getPackageInfo(ctx.packageName, PackageManager.GET_ACTIVITIES)
             if (pi != null) {
-                val versionName = if (pi.versionName == null) "null" else pi.versionName
+                val versionName = pi.versionName?.toString() ?: ""
                 val versionCode = pi.versionCode.toString() + ""
                 infos["versionName"] = versionName
                 infos["versionCode"] = versionCode

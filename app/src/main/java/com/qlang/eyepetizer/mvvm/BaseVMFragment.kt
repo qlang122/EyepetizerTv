@@ -9,11 +9,17 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.qlang.eyepetizer.base.BaseFragment
 
-abstract class BaseVMFragment<VM : BaseViewModel>(val dataBinding: Boolean = false) : BaseFragment() {
-    protected var binding: ViewDataBinding? = null
+abstract class BaseVMFragment<DB : ViewDataBinding, VM : BaseViewModel>(
+    val dataBinding: Boolean = false
+) : BaseFragment() {
+    protected var binding: DB? = null
     protected lateinit var viewModel: VM
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return if (dataBinding) {
             binding = DataBindingUtil.inflate(inflater, getLayoutResources(), container, false)
             rootView = binding?.root

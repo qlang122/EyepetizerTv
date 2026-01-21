@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/video_detail_list_item_left_right_margin"
+    android:layout_marginTop="@dimen/main_list_item_top_margin"
+    android:focusable="true"
+    android:padding="2dp"
+    tools:context=".base.BaseActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:focusable="false"
+        app:cardBackgroundColor="#fff"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="false">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/body_list_small_item_height">
+
+            <ImageView
+                android:id="@+id/iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@color/grey" />
+
+            <ImageView
+                android:id="@+id/iv_library"
+                android:layout_width="@dimen/main_list_item_lib_icon_size"
+                android:layout_height="@dimen/main_list_item_lib_icon_size"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/main_list_item_padding"
+                android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:src="@drawable/ic_choiceness"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_videoDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:layout_marginBottom="@dimen/main_list_item_padding"
+                android:background="@drawable/bg_time_radius"
+                android:paddingStart="4dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/textSize_12sp"
+                tools:text="10:29" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/main_list_item_padding"
+                android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:layout_marginBottom="@dimen/main_list_item_padding"
+                android:layout_toStartOf="@id/tv_videoDuration"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_avatar_gray_76dp"
+                        app:civ_border_color="@color/gray"
+                        app:civ_border_width="1dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_avatarStar"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignEnd="@id/iv_avatar"
+                        android:layout_alignBottom="@id/iv_avatar"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="2dp"
+                        android:src="@drawable/ic_star_white_15dp"
+                        android:visibility="gone"
+                        app:civ_border_color="@color/gray"
+                        app:civ_border_width="0.5dp"
+                        app:civ_circle_background_color="@color/blue"
+                        tools:visibility="visible" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.xiaweizi.marquee.MarqueeTextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:focusable="false"
+                        android:shadowColor="#333"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_16sp"
+                        app:scroll_first_delay="0"
+                        app:scroll_mode="mode_once"
+                        tools:text="广告裁判" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:maxLines="2"
+                        android:textColor="#888888"
+                        android:textSize="@dimen/textSize_12sp"
+                        android:visibility="gone"
+                        tools:text="开眼广告精选 / #广告" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

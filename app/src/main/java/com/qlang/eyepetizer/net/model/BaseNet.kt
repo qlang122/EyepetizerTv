@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit
 
 import okhttp3.Cache
 import okhttp3.ConnectionPool
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -65,7 +66,7 @@ abstract class BaseNet(private val context: Context) {
         val sslSocketFactory = SslContextFactory.getEmptySslSocket(context)?.socketFactory
 
         okHttpClient = okHttpClient ?: OkHttpClient.Builder()
-                .apply { sslSocketFactory?.let { sslSocketFactory(it) } }
+//                .apply { sslSocketFactory?.let { sslSocketFactory(it) } }
                 .hostnameVerifier { hostname, session -> true }
                 .cache(cache)
                 .addInterceptor { chain ->
@@ -135,11 +136,11 @@ abstract class BaseNet(private val context: Context) {
 
     fun toGsonRequestBody(params: Any): RequestBody {
         val jsonString = JSON.toJSONString(params)
-        return RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonString)
+        return RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), jsonString)
     }
 
     fun toGsonRequestBody(params: JSONObject): RequestBody {
-        return RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), params.toString())
+        return RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), params.toString())
     }
 
     private fun handleException(e: Throwable): String {

@@ -5,9 +5,8 @@
     android:id="@+id/ly_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_marginTop="@dimen/main_list_item_top_margin"
     android:focusable="true"
-    android:padding="2dp"
     tools:context=".base.BaseActivity">
 
     <androidx.cardview.widget.CardView
@@ -16,7 +15,7 @@
         android:clipToPadding="false"
         android:focusable="false"
         app:cardBackgroundColor="#fff"
-        app:cardCornerRadius="6dp"
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:cardMaxElevation="0dp"
         app:cardPreventCornerOverlap="true"
@@ -24,22 +23,25 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="224dp">
+            android:layout_height="@dimen/body_list_item_height"
+            android:focusable="false">
 
             <ImageView
                 android:id="@+id/iv_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="false"
                 android:scaleType="centerCrop"
                 tools:src="@color/grey" />
 
             <ImageView
                 android:id="@+id/iv_library"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/main_list_item_lib_icon_size"
+                android:layout_height="@dimen/main_list_item_lib_icon_size"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="@dimen/main_list_item_padding"
+                android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:focusable="false"
                 android:src="@drawable/ic_choiceness"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -50,9 +52,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:layout_marginBottom="@dimen/main_list_item_padding"
                 android:background="@drawable/bg_time_radius"
+                android:focusable="false"
                 android:paddingStart="4dp"
                 android:paddingTop="2dp"
                 android:paddingEnd="4dp"
@@ -65,22 +68,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/main_list_item_padding"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="@dimen/main_list_item_padding"
                 android:layout_toStartOf="@id/tv_videoDuration"
+                android:focusable="false"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:visibility="gone">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_avatar"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:focusable="false"
                         android:src="@drawable/ic_avatar_gray_76dp"
                         app:civ_border_color="@color/gray"
                         app:civ_border_width="1dp" />
@@ -95,6 +101,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="2dp"
+                        android:focusable="false"
                         android:src="@drawable/ic_star_white_15dp"
                         android:visibility="gone"
                         app:civ_border_color="@color/gray"
@@ -107,6 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:focusable="false"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -122,7 +130,7 @@
                         android:shadowRadius="2"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:scroll_first_delay="0"
                         app:scroll_mode="mode_once"
                         tools:text="广告裁判" />
@@ -132,11 +140,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:focusable="false"
                         android:maxLines="2"
-                        android:textColor="#888888"
+                        android:shadowColor="#333"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:textColor="#DCFFFFFF"
                         android:textSize="12sp"
                         android:visibility="gone"
-                        tools:text="开眼广告精选 / #广告" />
+                        tools:text="开眼广告精选 / #广告"
+                        tools:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

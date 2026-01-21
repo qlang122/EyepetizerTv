@@ -29,4 +29,5 @@
     <color name="text_brownness">#804100</color>
     <color name="text_white">#FFFFFF</color>
     <color name="text_red">#ff1f29</color>
+    <color name="color_f5f5f7">#f5f5f7</color>
 </resources>

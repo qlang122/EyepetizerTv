@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.libs.dialog.CustomViewDialog
 import com.qlang.eyepetizer.config.trycatch
 import com.qlang.eyepetizer.R
-import kotlinx.android.synthetic.main.layout_toolbar.*
 
 /**
  * @author Created by qlang on 2017/7/24.
@@ -40,13 +39,11 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         initToolBar()
-        initView()
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
         initToolBar()
-        initView()
     }
 
     /**
@@ -58,8 +55,6 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     abstract fun getContentLayoutId(): Int
-
-    open fun initView() {}
 
     open fun onConfigChange() {}
 
@@ -85,9 +80,15 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initToolBar() {
-        btn_toolBar_left?.setOnClickListener { onToolBarLeftItemClick(it) }
-        btn_toolBar_right?.setOnClickListener { onToolBarRightItemClick(it) }
-        btn_toolBar_right2?.setOnClickListener { onToolBarRightItem2Click(it) }
+        findViewById<View>(R.id.btn_toolBar_left)?.setOnClickListener {
+            onToolBarLeftItemClick(it)
+        }
+        findViewById<View>(R.id.btn_toolBar_right)?.setOnClickListener {
+            onToolBarRightItemClick(it)
+        }
+        findViewById<View>(R.id.btn_toolBar_right2)?.setOnClickListener {
+            onToolBarRightItem2Click(it)
+        }
     }
 
     open fun onToolBarLeftItemClick(view: View) {}
@@ -95,93 +96,108 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     open fun onToolBarRightItem2Click(view: View) {}
 
     fun setToolBarBgColor(@ColorRes resId: Int) {
-        toolbar?.setBackgroundColor(resources.getColor(resId))
+        findViewById<View>(R.id.toolbar)?.setBackgroundColor(resources.getColor(resId))
     }
 
     fun setToolBarBgColor(colorStr: String) {
-        toolbar?.setBackgroundColor(Color.parseColor(colorStr))
+        findViewById<View>(R.id.toolbar)?.setBackgroundColor(Color.parseColor(colorStr))
     }
 
     protected fun hideToolBar() {
-        toolbar?.visibility = View.GONE
+        findViewById<View>(R.id.toolbar)?.visibility = View.GONE
     }
 
     protected fun showToolBar() {
-        toolbar?.visibility = View.VISIBLE
+        findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
     }
 
     protected fun showToolBarItem() {
-        btn_toolBar_left?.visibility = View.VISIBLE
-        btn_toolBar_right?.visibility = View.VISIBLE
-        btn_toolBar_right2?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_left)?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_right)?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_right2)?.visibility = View.VISIBLE
     }
 
     protected fun hideToolBarItem() {
-        btn_toolBar_left?.visibility = View.GONE
-        btn_toolBar_right?.visibility = View.GONE
-        btn_toolBar_right2?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_left)?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_right)?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_right2)?.visibility = View.GONE
     }
 
     protected fun showToolBarLeftItem() {
-        btn_toolBar_left?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_left)?.visibility = View.VISIBLE
     }
 
     protected fun hideToolBarLeftItem() {
-        btn_toolBar_left?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_left)?.visibility = View.GONE
     }
 
     protected fun showToolBarRightItem() {
-        btn_toolBar_right?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_right)?.visibility = View.VISIBLE
     }
 
     protected fun hideToolBarRightItem() {
-        btn_toolBar_right?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_right)?.visibility = View.GONE
     }
 
     protected fun showToolBarRight2Item() {
-        btn_toolBar_right2?.visibility = View.VISIBLE
+        findViewById<View>(R.id.btn_toolBar_right2)?.visibility = View.VISIBLE
     }
 
     protected fun hideToolBarRight2Item() {
-        btn_toolBar_right2?.visibility = View.GONE
+        findViewById<View>(R.id.btn_toolBar_right2)?.visibility = View.GONE
     }
 
     protected fun setToolBarTitle(text: String) {
-        tv_toolBar_title?.text = text
+        findViewById<TextView>(R.id.tv_toolBar_title)?.text = text
     }
 
     protected fun setToolBarTitle(@StringRes resId: Int) {
-        tv_toolBar_title?.setText(resId)
+        findViewById<TextView>(R.id.tv_toolBar_title)?.setText(resId)
     }
 
-    protected fun setToolBarLeftItem(@DrawableRes resId: Int = -1, @StringRes strId: Int = -1, str: String? = null) {
+    protected fun setToolBarLeftItem(
+        @DrawableRes resId: Int = -1,
+        @StringRes strId: Int = -1,
+        str: String? = null
+    ) {
         showToolBarLeftItem()
         val drawable = if (resId > 0) {
-            resources.getDrawable(resId)?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
+            resources.getDrawable(resId)
+                ?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
         } else null
-        btn_toolBar_left?.setCompoundDrawables(drawable, null, null, null)
-        str?.let { btn_toolBar_left?.text = it }
-        if (strId > 0) btn_toolBar_left?.text = resources.getString(strId)
+        findViewById<TextView>(R.id.btn_toolBar_left)?.setCompoundDrawables(drawable, null, null, null)
+        str?.let { findViewById<TextView>(R.id.btn_toolBar_left)?.text = it }
+        if (strId > 0) findViewById<TextView>(R.id.btn_toolBar_left)?.text = resources.getString(strId)
     }
 
-    protected fun setToolBarRightItem(@DrawableRes resId: Int = -1, @StringRes strId: Int = -1, str: String? = null) {
+    protected fun setToolBarRightItem(
+        @DrawableRes resId: Int = -1,
+        @StringRes strId: Int = -1,
+        str: String? = null
+    ) {
         showToolBarRightItem()
         val drawable = if (resId > 0) {
-            resources.getDrawable(resId)?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
+            resources.getDrawable(resId)
+                ?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
         } else null
-        btn_toolBar_right?.setCompoundDrawables(drawable, null, null, null)
-        str?.let { btn_toolBar_right?.text = it }
-        if (strId > 0) btn_toolBar_right?.text = resources.getString(strId)
+        findViewById<TextView>(R.id.btn_toolBar_right)?.setCompoundDrawables(drawable, null, null, null)
+        str?.let { findViewById<TextView>(R.id.btn_toolBar_right)?.text = it }
+        if (strId > 0) findViewById<TextView>(R.id.btn_toolBar_right)?.text = resources.getString(strId)
     }
 
-    protected fun setToolBarRight2Item(@DrawableRes resId: Int = -1, @StringRes strId: Int = -1, str: String? = null) {
+    protected fun setToolBarRight2Item(
+        @DrawableRes resId: Int = -1,
+        @StringRes strId: Int = -1,
+        str: String? = null
+    ) {
         showToolBarRight2Item()
         val drawable = if (resId > 0) {
-            resources.getDrawable(resId)?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
+            resources.getDrawable(resId)
+                ?.also { it.setBounds(0, 0, it.minimumWidth, it.minimumHeight) }
         } else null
-        btn_toolBar_right2?.setCompoundDrawables(drawable, null, null, null)
-        str?.let { btn_toolBar_right2?.text = it }
-        if (strId > 0) btn_toolBar_right2?.text = resources.getString(strId)
+        findViewById<TextView>(R.id.btn_toolBar_right2)?.setCompoundDrawables(drawable, null, null, null)
+        str?.let { findViewById<TextView>(R.id.btn_toolBar_right2)?.text = it }
+        if (strId > 0) findViewById<TextView>(R.id.btn_toolBar_right2)?.text = resources.getString(strId)
     }
 
     fun showToast(str: String, duration: Int = Toast.LENGTH_SHORT) {
@@ -210,7 +226,11 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         toast?.show()
     }
 
-    fun showProgress(msg: String, cancelable: Boolean = true, touchOutsideCancelable: Boolean = false) {
+    fun showProgress(
+        msg: String,
+        cancelable: Boolean = true,
+        touchOutsideCancelable: Boolean = false
+    ) {
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_loading_view, null)
         val tipText = view.findViewById<TextView>(R.id.tipTextView)
         tipText.text = msg

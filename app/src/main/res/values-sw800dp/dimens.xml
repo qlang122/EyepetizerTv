@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textSize_10sp">11sp</dimen>
+    <dimen name="textSize_11sp">12sp</dimen>
+    <dimen name="textSize_12sp">13sp</dimen>
+    <dimen name="textSize_13sp">14sp</dimen>
+    <dimen name="textSize_14sp">15sp</dimen>
+    <dimen name="textSize_15sp">16sp</dimen>
+    <dimen name="textSize_16sp">17sp</dimen>
+    <dimen name="textSize_17sp">18sp</dimen>
+    <dimen name="textSize_18sp">19sp</dimen>
+    <dimen name="textSize_20sp">21sp</dimen>
+    <dimen name="textSize_22sp">23sp</dimen>
+    <dimen name="textSize_24sp">25sp</dimen>
+    <dimen name="textSize_26sp">27sp</dimen>
+    <dimen name="textSize_28sp">29sp</dimen>
+    <dimen name="textSize_30sp">31sp</dimen>
+    <dimen name="textSize_32sp">33sp</dimen>
+
+    <dimen name="launch_logo_top">160dp</dimen>
+    <dimen name="launch_bottom_text_bottom">80dp</dimen>
+    <dimen name="main_body_left_right_margin">0dp</dimen>
+    <dimen name="main_list_item_top_margin">18dp</dimen>
+    <dimen name="main_body_top_margin">8dp</dimen>
+    <dimen name="main_body_bottom_margin">18dp</dimen>
+    <dimen name="main_list_item_left_right_margin">0dp</dimen>
+    <dimen name="main_list_item_padding">16dp</dimen>
+    <dimen name="main_list_item_lib_icon_size">48dp</dimen>
+    <dimen name="main_title_item_left_right_padding">24dp</dimen>
+    <dimen name="video_detail_player_width">600dp</dimen>
+    <dimen name="video_detail_player_height">420dp</dimen>
+    <dimen name="video_detail_player_land_height">340dp</dimen>
+    <dimen name="video_detail_info_layout_padding">24dp</dimen>
+    <dimen name="body_list_item_height">244dp</dimen>
+    <dimen name="body_list_small_item_height">200dp</dimen>
+    <dimen name="video_detail_list_item_left_right_margin">0dp</dimen>
+</resources>

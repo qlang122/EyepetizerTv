@@ -104,7 +104,7 @@ class MyClockView : View, Runnable {
         isRuning = false
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         calendar.timeInMillis = System.currentTimeMillis()
 
         canvas?.let {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img_home_bg"
+        android:orientation="vertical"
+        tools:context=".ui.activity.MainActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_title_left_right_margin"
+            android:layout_marginTop="@dimen/main_title_top_margin"
+            android:layout_marginEnd="@dimen/main_title_left_right_margin"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:scrollbars="none"
+            app:layoutManager="com.qlang.tvwidget.AutoFocusGridLayoutManager"
+            app:spanCount="1"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_tab_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:focusable="false"
+            android:paddingStart="@dimen/main_body_left_right_margin"
+            android:paddingTop="@dimen/main_body_top_margin"
+            android:paddingEnd="@dimen/main_body_left_right_margin"
+            android:paddingBottom="@dimen/main_body_bottom_margin"
+            android:scrollbars="none"
+            app:layoutManager="com.qlang.tvwidget.AutoFocusGridLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_follow_card_type"
+            tools:spanCount="2" />
+
+    </LinearLayout>
+</layout>

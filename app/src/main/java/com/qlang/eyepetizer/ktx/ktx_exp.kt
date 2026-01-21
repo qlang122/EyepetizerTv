@@ -13,11 +13,15 @@ import kotlinx.coroutines.*
  * @param job 任务
  * @param owner 生命周期监听，如果自行通过[job]取消，可不传此值
  */
-fun <T, R> T.execAsync(block: suspend T.() -> R, rtn: ((R) -> Unit)? = null,
-                       owner: LifecycleOwner? = null, job: Job? = null,
-                       disp: CoroutineDispatcher = Dispatchers.Main): T {
+fun <T, R> T.execAsync(
+    block: suspend T.() -> R,
+    rtn: ((R) -> Unit)? = null,
+    owner: LifecycleOwner? = null, job: Job? = null,
+    disp: CoroutineDispatcher = Dispatchers.Main
+): T {
     val _job by lazy { job ?: Job() }
-    owner?.lifecycle?.addObserver(FullLifecycleObserverAdapter(object : FullLifecycleObserverImpl() {
+    owner?.lifecycle?.addObserver(FullLifecycleObserverAdapter(object :
+        FullLifecycleObserverImpl() {
         override fun onStop(owner: LifecycleOwner) {
             _job.cancel()
         }

@@ -1,5 +1,6 @@
 package com.libs.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.DhcpInfo
@@ -125,9 +126,10 @@ object NetworkUtils {
         if (manager?.backgroundDataSetting == false) {
             return false
         }
-        return ConnectivityManager.TYPE_WIFI == info?.type && info?.isConnectedOrConnecting
+        return ConnectivityManager.TYPE_WIFI == info?.type && info?.isConnectedOrConnecting == true
     }
 
+    @SuppressLint("MissingPermission")
     @JvmStatic
     fun isWifiEnabled(context: Context): Boolean {
         val mgrConn = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
@@ -169,6 +171,7 @@ object NetworkUtils {
     /**
      * 获取扫描到的wifi列表
      */
+    @SuppressLint("MissingPermission")
     @JvmStatic
     fun getAroundWifi(context: Context): List<ScanResult>? {
         val wifi = context.getSystemService(Context.WIFI_SERVICE) as? WifiManager

@@ -6,6 +6,7 @@ import android.view.View
 import android.graphics.*
 import android.graphics.Rect
 import android.graphics.Bitmap
+import java.util.ArrayList
 
 /**
  * @author Created by qlang on 2017/7/24.
@@ -107,7 +108,7 @@ class FaceMaskView : View {
         viewHeight = measuredHeight
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         faceInfos.forEach { face ->

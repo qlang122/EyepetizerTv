@@ -400,7 +400,7 @@ object Utils {
     fun getAppVersionName(context: Context): String {
         var back = ""
         try {
-            back = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            back = context.packageManager.getPackageInfo(context.packageName, 0).versionName.toString()
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {

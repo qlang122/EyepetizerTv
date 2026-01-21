@@ -4,17 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.qlang.eyepetizer.R
 import com.qlang.eyepetizer.bean.FocusEntity
 import com.qlang.eyepetizer.bean.ItemTypeHelper
 import com.qlang.eyepetizer.bean.LocalVideoInfo
 import com.qlang.eyepetizer.bean.VideoRelated
+import com.qlang.eyepetizer.databinding.ActivityVideoDetailBinding
 import com.qlang.eyepetizer.model.VideoDetailViewModel
 import com.qlang.eyepetizer.mvvm.BaseVMActivity
 import com.qlang.eyepetizer.net.loadImg
@@ -28,11 +30,9 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
-import kotlinx.android.synthetic.main.activity_video_detail.*
-import kotlinx.android.synthetic.main.item_video_detail_info.*
 import kotlinx.coroutines.*
 
-class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
+class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDetailViewModel>() {
 
     private var relatedAdapter: VideoDetailRelatedAdapter? = null
     private var orientationUtils: OrientationUtils? = null
@@ -54,6 +54,8 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     private var lastKeyDownTime = System.currentTimeMillis()
 
     private var isFullVideo = false
+
+    private var isLandScreen = false
 
     private var focusEntity = FocusEntity<Any>()
     private val focusListener = View.OnFocusChangeListener { v, hasFocus ->
@@ -79,46 +81,57 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
 
     override fun onPause() {
         super.onPause()
-        videoPlayer.onVideoPause()
+        binding?.videoPlayer?.onVideoPause()
     }
 
     override fun onResume() {
         super.onResume()
-        videoPlayer.onVideoResume()
+        binding?.videoPlayer?.onVideoResume()
     }
 
     override fun onDestroy() {
         GSYVideoADManager.releaseAllVideos()
         orientationUtils?.releaseListener()
-        videoPlayer.release()
-        videoPlayer.setVideoAllCallBack(null)
+        binding?.videoPlayer?.release()
+        binding?.videoPlayer?.setVideoAllCallBack(null)
         globalJob.cancel()
         super.onDestroy()
     }
 
-    override fun onBackPressed() {
+    private fun doBack() {
         if (GSYVideoManager.backFromWindowFull(this)) {
-            btn_full?.requestFocus()
+            binding?.btnFull?.requestFocus()
             isFullVideo = false
             return
         }
-        if (!btn_full.isFocused) {
-            btn_full.requestFocus()
-            return
+        binding?.btnFull?.let {
+            if (it.isVisible && !it.isFocused) {
+                it.requestFocus()
+                return
+            }
         }
-        super.onBackPressed()
+
+        finish()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        videoPlayer.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
+        binding?.videoPlayer?.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
+
+        val isLand = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        if (isLandScreen != isLand) {
+            isLandScreen = isLand
+            binding?.rvList?.layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 4 else 1)
+        }
     }
 
     override fun initView() {
         super.initView()
         initParams()
 
-        orientationUtils = OrientationUtils(this, videoPlayer)
+        binding?.videoPlayer?.let { view ->
+            orientationUtils = OrientationUtils(this, view)
+        }
 
         relatedAdapter = VideoDetailRelatedAdapter(this, viewModel.relatedDatas).apply {
             setOnItemClickListener { position, _, t ->
@@ -129,19 +142,26 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
                 if (hasFocus) focusEntity.setCurrent(t, position)
             }
         }
-        rv_list?.apply {
+        binding?.rvList?.run {
             isFocusable = false
-            layoutManager = AutoFocusGridLayoutManager(context, 4)
+            isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 4 else 1)
             adapter = relatedAdapter
             setHasFixedSize(true)
         }
         startVideoPlayer()
 
-        viewBorder.attachTo(ly_head)
-        viewBorder2.attachTo(rv_list)
+        binding?.run {
+            viewBorder.attachTo(lyHead)
+            viewBorder2.attachTo(rvList)
 
-        setOnClickListener(btn_full)
-        setOnFocusListener(btn_full, btn_cache, btn_favorites, btn_follow, ly_player)
+            setOnClickListener(btnFull)
+            setOnFocusListener(btnFull, btnCache, btnFavorites, btnFollow, lyPlayer)
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            doBack()
+        }
 
         viewModel.onInit()
     }
@@ -153,11 +173,11 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_full -> {
-                ly_player.clearFocus()
+                binding?.lyPlayer?.clearFocus()
                 showFull()
             }
             R.id.ly_player -> {
-                videoPlayer.clickStartBtn()
+                binding?.videoPlayer?.clickStartBtn()
             }
         }
     }
@@ -195,12 +215,13 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 val pos = focusEntity.position
                 if (pos < 4) {//焦点在第一排时
-                    btn_full?.requestFocus()
+                    binding?.btnFull?.requestFocus()
                     return true
                 }
             }
+            KeyEvent.KEYCODE_BACK,
             KeyEvent.KEYCODE_ESCAPE -> {
-                onBackPressed();return true
+                doBack();return true
             }
         }
         return if (event == null) false else super.onKeyDown(keyCode, event)
@@ -217,7 +238,7 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     }
 
     private fun doVideoAction(action: Int) {
-        videoPlayer?.run {
+        binding?.videoPlayer?.run {
             val total = duration
             var curr = currentPositionWhenPlaying
             when (action) {
@@ -235,7 +256,7 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
 
     private fun doFocusAction() {
         if (isFullVideo) {
-            videoPlayer.clickStartBtn()
+            binding?.videoPlayer?.clickStartBtn()
             return
         }
         when (val value = focusEntity.value) {
@@ -260,25 +281,31 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     private fun startVideoPlayer() {
         setInfoData()
         viewModel.videoInfo?.run {
-            videoPlayer.startPlay()
+            binding?.videoPlayer?.startPlay()
         }
-        btn_full?.requestFocus()
+        binding?.btnFull?.requestFocus()
     }
 
     private fun setInfoData() {
-        viewModel.videoInfo?.run {
-            cover?.blurred?.let { iv_blurredBg.loadImg(it) }
-            tv_title?.text = title ?: ""
-            val cate = "${category ?: ""} / ${ItemTypeHelper.convertVideoTime(duration
-                    ?: 0)}${if (library == LibraryType.TYPE_DAILY) " / 开眼精选" else ""}"
-            tv_category?.text = cate
-            tv_description?.text = description ?: ""
-            tv_collectionCount?.text = "${consumption?.collectionCount ?: "0"}"
-            tv_shareCount?.text = "${consumption?.shareCount ?: "0"}"
+        viewModel.videoInfo?.let { info ->
+            info.cover?.blurred?.let { binding?.ivBlurredBg?.loadImg(it) }
+            binding?.lyInfo?.tvTitle?.text = info.title ?: ""
+            val cate = "${info.category ?: ""} / ${
+                ItemTypeHelper.convertVideoTime(
+                    info.duration
+                        ?: 0
+                )
+            }${if (info.library == LibraryType.TYPE_DAILY) " / 开眼精选" else ""}"
+            binding?.lyInfo?.tvCategory?.text = cate
+            binding?.lyInfo?.tvDescription?.text = info.description ?: ""
+            binding?.lyInfo?.tvCollectionCount?.text = "${info.consumption?.collectionCount ?: "0"}"
+            binding?.lyInfo?.tvShareCount?.text = "${info.consumption?.shareCount ?: "0"}"
 
-            tv_authorName?.text = author?.name ?: ""
-            tv_authorDescription?.text = author?.description ?: ""
-            author?.icon?.let { iv_avatar?.loadImg(it, { iv_avatar?.setImageBitmap(it) }) }
+            binding?.lyInfo?.tvAuthorName?.text = info.author?.name ?: ""
+            binding?.lyInfo?.tvAuthorDescription?.text = info.author?.description ?: ""
+            info.author?.icon?.let { url ->
+                binding?.lyInfo?.ivAvatar?.loadImg(url, { binding?.lyInfo?.ivAvatar?.setImageBitmap(it) })
+            }
         }
     }
 
@@ -331,20 +358,20 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
     private fun delayHideBottomContainer() {
         hideBottomContainerJob?.cancel()
         hideBottomContainerJob = CoroutineScope(globalJob).launch(Dispatchers.Main) {
-            delay(videoPlayer.dismissControlTime.toLong())
-            videoPlayer.getBottomContainer().visibility = View.GONE
-            videoPlayer.startButton.visibility = View.GONE
+            binding?.videoPlayer?.dismissControlTime?.toLong()?.let { delay(it) }
+            binding?.videoPlayer?.getBottomContainer()?.visibility = View.GONE
+            binding?.videoPlayer?.startButton?.visibility = View.GONE
         }
     }
 
     private fun showFull() {
         if (isFullVideo) {
-            videoPlayer.clickStartBtn()
+            binding?.videoPlayer?.clickStartBtn()
             return
         }
 
         orientationUtils?.run { if (isLand != 1) resolveByClick() }
-        videoPlayer.startWindowFullscreen(this, true, false)
+        binding?.videoPlayer?.startWindowFullscreen(this, true, false)
         isFullVideo = true
     }
 
@@ -364,7 +391,7 @@ class VideoDetailActivity : BaseVMActivity<VideoDetailViewModel>() {
 
         override fun onAutoComplete(url: String?, vararg objects: Any?) {
             super.onAutoComplete(url, *objects)
-            if (isFullVideo) onBackPressed()
+            if (isFullVideo) doBack()
         }
     }
 
