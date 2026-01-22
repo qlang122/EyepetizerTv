@@ -7,10 +7,13 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.ViewTreeObserver
 import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.libs.utils.UiUtils
 import com.qlang.eyepetizer.R
+import com.qlang.eyepetizer.base.insetToSystemStatusBar
 import com.qlang.eyepetizer.bean.*
 import com.qlang.eyepetizer.databinding.ActivityMainBinding
 import com.qlang.eyepetizer.ktx.execAsync
@@ -47,6 +50,7 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
     private var isLandScreen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.insetToSystemStatusBar()
         super.onCreate(savedInstanceState)
     }
 
@@ -59,9 +63,21 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
             isLandScreen = isLand
             binding?.rvList?.layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 3 else 1)
         }
+        if (isLandScreen) {
+            viewBorder.attachTo(binding?.rvList)
+            viewBorder2.attachTo(binding?.rvTitle)
+        } else {
+            viewBorder.detachFrom(binding?.rvList)
+            viewBorder2.detachFrom(binding?.rvTitle)
+        }
     }
 
     override fun initView() {
+        binding?.vStatusBar?.let {
+            UiUtils.setStatusBarColorAndHeight(it, resources.getColor(R.color.color_14a8a8a8), 0)
+        }
+        isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
         currFocusTab = FocusEntity(viewModel.tabTitles[1]).apply { position = 1 }//默认选中的tab
 
         listAdapter = HomeListAdapter(this, viewModel.datas).apply {
@@ -96,12 +112,15 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
                 override fun onGlobalLayout() {
                     layoutManager?.findViewByPosition(1)?.requestFocus()
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    viewBorder.attachTo(binding?.rvList)
+                    if (isLandScreen) {
+                        viewBorder.attachTo(binding?.rvList)
+                    } else {
+                        viewBorder.detachFrom(binding?.rvList)
+                    }
                 }
             })
         }
         binding?.rvList?.run {
-            isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
             layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 3 else 1).apply {
                 //                it.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 //                    override fun getSpanSize(position: Int): Int {
@@ -128,7 +147,11 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
                 }
             })
         }
-        viewBorder2.attachTo(binding?.rvTitle)
+        if (isLandScreen) {
+            viewBorder2.attachTo(binding?.rvTitle)
+        } else {
+            viewBorder2.detachFrom(binding?.rvTitle)
+        }
 
         onBackPressedDispatcher.addCallback(this) {
             doBack()

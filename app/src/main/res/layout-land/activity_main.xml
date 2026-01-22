@@ -12,6 +12,12 @@
         android:orientation="vertical"
         tools:context=".ui.activity.MainActivity">
 
+        <View
+            android:id="@+id/v_status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_title"
             android:layout_width="match_parent"
@@ -39,9 +45,9 @@
             android:paddingBottom="@dimen/main_body_bottom_margin"
             android:scrollbars="none"
             app:layoutManager="com.qlang.tvwidget.AutoFocusGridLayoutManager"
-            tools:itemCount="2"
+            tools:itemCount="3"
             tools:listitem="@layout/item_follow_card_type"
-            tools:spanCount="2" />
+            tools:spanCount="3" />
 
     </LinearLayout>
 </layout>

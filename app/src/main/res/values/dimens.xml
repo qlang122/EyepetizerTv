@@ -91,7 +91,7 @@
     <dimen name="dialog_width">360dp</dimen>
     <dimen name="dialog_height">220dp</dimen>
     <dimen name="dialog_padding">24dp</dimen>
-    <dimen name="launch_logo_top">120dp</dimen>
+    <dimen name="launch_logo_top">140dp</dimen>
     <dimen name="launch_bottom_text_bottom">50dp</dimen>
     <dimen name="main_title_left_right_margin">0dp</dimen>
     <dimen name="main_title_top_margin">0dp</dimen>
@@ -104,12 +104,14 @@
     <dimen name="main_list_item_padding">8dp</dimen>
     <dimen name="main_list_item_lib_icon_size">40dp</dimen>
     <dimen name="main_title_item_left_right_padding">16dp</dimen>
-    <dimen name="main_title_item_top_bottom_padding">12dp</dimen>
-    <dimen name="video_detail_player_width">460dp</dimen>
-    <dimen name="video_detail_player_height">240dp</dimen>
+    <dimen name="main_title_item_top_bottom_padding">16dp</dimen>
+    <dimen name="video_detail_player_width">440dp</dimen>
+    <dimen name="video_detail_player_height">260dp</dimen>
     <dimen name="video_detail_player_land_height">240dp</dimen>
     <dimen name="video_detail_info_layout_padding">16dp</dimen>
+    <dimen name="video_detail_info_layout_top_padding">12dp</dimen>
     <dimen name="body_list_item_height">200dp</dimen>
+    <dimen name="body_list_item_land_height">160dp</dimen>
     <dimen name="body_list_small_item_height">160dp</dimen>
     <dimen name="video_detail_list_item_left_right_margin">0dp</dimen>
 </resources>

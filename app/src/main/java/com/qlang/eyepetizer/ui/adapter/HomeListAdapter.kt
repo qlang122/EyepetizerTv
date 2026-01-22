@@ -140,7 +140,7 @@ class HomeListAdapter(context: Context, val list: List<BaseInfo>) : BaseAdapter<
             findView(R.id.iv_avatarStar, view)?.visibility = if (UserType.TYPE_STAR == userType) View.VISIBLE else View.GONE
             findView(R.id.tv_videoDuration, textView)?.text = ItemTypeHelper.convertVideoTime(time)
             head?.let { url ->
-                findView(R.id.iv_avatar, imageView)?.let { img -> img.loadImg(url, { img.setImageBitmap(it) }) }
+                findView(R.id.iv_avatar, imageView)?.loadImg(url)
             }
             findView(R.id.tv_title, textView)?.text = title ?: ""
             findView(R.id.tv_description, textView)?.text = desc ?: ""

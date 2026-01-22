@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.addCallback
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.qlang.eyepetizer.R
+import com.qlang.eyepetizer.base.insetToSystemStatusBar
 import com.qlang.eyepetizer.bean.FocusEntity
 import com.qlang.eyepetizer.bean.ItemTypeHelper
 import com.qlang.eyepetizer.bean.LocalVideoInfo
@@ -63,6 +65,7 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.insetToSystemStatusBar()
         super.onCreate(savedInstanceState)
     }
 
@@ -105,7 +108,7 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
             return
         }
         binding?.btnFull?.let {
-            if (it.isVisible && !it.isFocused) {
+            if (it.isVisible && isLandScreen && !it.isFocused) {
                 it.requestFocus()
                 return
             }
@@ -123,11 +126,20 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
             isLandScreen = isLand
             binding?.rvList?.layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 4 else 1)
         }
+        if (isLandScreen) {
+            viewBorder.attachTo(binding?.lyHead)
+            viewBorder2.attachTo(binding?.rvList)
+        } else {
+            viewBorder.detachFrom(binding?.lyHead)
+            viewBorder2.detachFrom(binding?.rvList)
+        }
     }
 
     override fun initView() {
         super.initView()
         initParams()
+
+        isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         binding?.videoPlayer?.let { view ->
             orientationUtils = OrientationUtils(this, view)
@@ -144,7 +156,6 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
         }
         binding?.rvList?.run {
             isFocusable = false
-            isLandScreen = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
             layoutManager = AutoFocusGridLayoutManager(context, if (isLandScreen) 4 else 1)
             adapter = relatedAdapter
             setHasFixedSize(true)
@@ -152,11 +163,16 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
         startVideoPlayer()
 
         binding?.run {
-            viewBorder.attachTo(lyHead)
-            viewBorder2.attachTo(rvList)
+            if (isLandScreen) {
+                viewBorder.attachTo(lyHead)
+                viewBorder2.attachTo(rvList)
+            } else {
+                viewBorder.detachFrom(lyHead)
+                viewBorder2.detachFrom(rvList)
+            }
 
             setOnClickListener(btnFull)
-            setOnFocusListener(btnFull, btnCache, btnFavorites, btnFollow, lyPlayer)
+            setOnFocusListener(btnFull, btnCache, btnFavorites, btnFollow, lyPlayer, btnBack)
         }
 
         onBackPressedDispatcher.addCallback(this) {
@@ -179,6 +195,7 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
             R.id.ly_player -> {
                 binding?.videoPlayer?.clickStartBtn()
             }
+            R.id.btn_back -> finish()
         }
     }
 
@@ -361,6 +378,7 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
             binding?.videoPlayer?.dismissControlTime?.toLong()?.let { delay(it) }
             binding?.videoPlayer?.getBottomContainer()?.visibility = View.GONE
             binding?.videoPlayer?.startButton?.visibility = View.GONE
+            showBackIcon(false)
         }
     }
 
@@ -375,13 +393,25 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
         isFullVideo = true
     }
 
+    private fun showBackIcon(value: Boolean) {
+        if (!isLandScreen) return
+        binding?.btnBack?.isVisible = value
+    }
+
     inner class VideoCallPlayBack : GSYSampleCallBack() {
         override fun onStartPrepared(url: String?, vararg objects: Any?) {
             super.onStartPrepared(url, *objects)
+            showBackIcon(false)
         }
 
         override fun onClickBlank(url: String?, vararg objects: Any?) {
             super.onClickBlank(url, *objects)
+            showBackIcon(true)
+        }
+
+        override fun onClickBlankFullscreen(url: String?, vararg objects: Any?) {
+            super.onClickBlankFullscreen(url, *objects)
+            showBackIcon(true)
         }
 
         override fun onClickStop(url: String?, vararg objects: Any?) {
@@ -389,8 +419,14 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
             delayHideBottomContainer()
         }
 
+        override fun onClickResume(url: String?, vararg objects: Any?) {
+            super.onClickResume(url, *objects)
+            delayHideBottomContainer()
+        }
+
         override fun onAutoComplete(url: String?, vararg objects: Any?) {
             super.onAutoComplete(url, *objects)
+            showBackIcon(true)
             if (isFullVideo) doBack()
         }
     }

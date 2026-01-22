@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ly_root"
@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/main_list_item_top_margin"
     android:focusable="true"
+    android:orientation="vertical"
     tools:context=".base.BaseActivity">
 
     <androidx.cardview.widget.CardView
@@ -63,97 +64,87 @@
                 android:textColor="@color/grey"
                 android:textSize="12sp"
                 tools:text="10:29" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/main_list_item_padding"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="@dimen/main_list_item_padding"
-                android:layout_toStartOf="@id/tv_videoDuration"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/main_title_item_left_right_padding"
+        android:layout_marginTop="@dimen/main_list_item_padding"
+        android:layout_marginBottom="@dimen/main_list_item_padding"
+        android:focusable="false"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:visibility="visible">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:focusable="false"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:src="@drawable/ic_avatar_gray_76dp"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:visibility="gone">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:focusable="false"
-                        android:src="@drawable/ic_avatar_gray_76dp"
-                        app:civ_border_color="@color/gray"
-                        app:civ_border_width="1dp" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_avatarStar"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_alignEnd="@id/iv_avatar"
-                        android:layout_alignBottom="@id/iv_avatar"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="2dp"
-                        android:focusable="false"
-                        android:src="@drawable/ic_star_white_15dp"
-                        android:visibility="gone"
-                        app:civ_border_color="@color/gray"
-                        app:civ_border_width="0.5dp"
-                        app:civ_circle_background_color="@color/blue"
-                        tools:visibility="visible" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <com.xiaweizi.marquee.MarqueeTextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:focusable="false"
-                        android:shadowColor="#333"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="2"
-                        android:singleLine="true"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:scroll_first_delay="0"
-                        app:scroll_mode="mode_once"
-                        tools:text="广告裁判" />
-
-                    <TextView
-                        android:id="@+id/tv_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:focusable="false"
-                        android:maxLines="2"
-                        android:shadowColor="#333"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="2"
-                        android:textColor="#DCFFFFFF"
-                        android:textSize="12sp"
-                        android:visibility="gone"
-                        tools:text="开眼广告精选 / #广告"
-                        tools:visibility="visible" />
-                </LinearLayout>
-            </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatarStar"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignEnd="@id/iv_avatar"
+                android:layout_alignBottom="@id/iv_avatar"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="2dp"
+                android:focusable="false"
+                android:src="@drawable/ic_star_white_15dp"
+                android:visibility="gone"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="0.5dp"
+                app:civ_circle_background_color="@color/blue"
+                tools:visibility="visible" />
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:focusable="false"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.xiaweizi.marquee.MarqueeTextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:focusable="false"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_16sp"
+                android:textStyle="bold"
+                app:scroll_first_delay="0"
+                app:scroll_mode="mode_once"
+                tools:text="广告裁判" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:focusable="false"
+                android:maxLines="1"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/textSize_13sp"
+                android:visibility="visible"
+                tools:text="开眼广告精选 / #广告"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

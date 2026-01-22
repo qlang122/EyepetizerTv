@@ -99,4 +99,12 @@ class MyGsyVideoPlayer : StandardGSYVideoPlayer {
     }
 
     fun getBottomContainer() = mBottomContainer
+
+    override fun getEnlargeImageRes(): Int {
+        return R.drawable.ic_video_max
+    }
+
+    override fun getShrinkImageRes(): Int {
+        return R.drawable.ic_video_min
+    }
 }

@@ -16,6 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:focusable="false"
+            android:maxLines="3"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_22sp"
             tools:text="2020年度游戏大作混剪" />
@@ -25,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:focusable="false"
             android:textColor="#e9e9e9"
             android:textSize="@dimen/textSize_15sp"
             tools:text="#游戏 / 开眼精选" />
@@ -35,6 +38,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:ellipsize="end"
+            android:focusable="false"
             android:lineSpacingMultiplier="1.1"
             android:maxLines="5"
             android:textColor="#e9e9e9"
@@ -45,16 +49,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:focusable="false"
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="52dp"
-                android:layout_height="52dp">
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:focusable="false">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusable="false"
                     tools:src="@drawable/ic_avatar_gray_76dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -64,6 +71,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="1dp"
+                    android:focusable="false"
                     android:src="@drawable/ic_star_white_15dp"
                     app:civ_border_color="@color/gray"
                     app:civ_border_width="1px"
@@ -73,18 +81,18 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
+                android:focusable="false"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_authorName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
                     android:ellipsize="end"
+                    android:focusable="false"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_17sp"
@@ -94,7 +102,9 @@
                     android:id="@+id/tv_authorDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:ellipsize="end"
+                    android:focusable="false"
                     android:singleLine="true"
                     android:textColor="#dedede"
                     android:textSize="@dimen/textSize_15sp"
@@ -108,6 +118,7 @@
                 android:layout_gravity="bottom"
                 android:drawableLeft="@drawable/ic_favorite_border_white_20dp"
                 android:drawablePadding="8dp"
+                android:focusable="false"
                 android:minWidth="80dp"
                 android:text="0"
                 android:textColor="@color/white"
@@ -122,6 +133,7 @@
                 android:layout_marginStart="24dp"
                 android:drawableLeft="@drawable/ic_share_white_20dp"
                 android:drawablePadding="8dp"
+                android:focusable="false"
                 android:text="0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize_16sp"

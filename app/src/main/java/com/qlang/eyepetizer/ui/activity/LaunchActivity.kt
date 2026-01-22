@@ -13,6 +13,7 @@ import com.qlang.eyepetizer.R
 import com.qlang.eyepetizer.base.BaseActivity
 import com.qlang.eyepetizer.config.startActivity
 import com.permissionx.guolindev.PermissionX
+import com.qlang.eyepetizer.base.insetToSystemStatusBar
 import kotlinx.coroutines.Job
 
 class LaunchActivity : BaseActivity() {
@@ -60,6 +61,7 @@ class LaunchActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.insetToSystemStatusBar()
         super.onCreate(savedInstanceState)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {

@@ -25,12 +25,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/body_list_small_item_height">
+            android:layout_height="@dimen/body_list_small_item_height"
+            android:focusable="false">
 
             <ImageView
                 android:id="@+id/iv_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusable="false"
                 android:scaleType="centerCrop"
                 tools:src="@color/grey" />
 
@@ -41,6 +43,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/main_list_item_padding"
                 android:layout_marginEnd="@dimen/main_list_item_padding"
+                android:focusable="false"
                 android:src="@drawable/ic_choiceness"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -54,6 +57,7 @@
                 android:layout_marginEnd="@dimen/main_list_item_padding"
                 android:layout_marginBottom="@dimen/main_list_item_padding"
                 android:background="@drawable/bg_time_radius"
+                android:focusable="false"
                 android:paddingStart="4dp"
                 android:paddingTop="2dp"
                 android:paddingEnd="4dp"
@@ -70,18 +74,21 @@
                 android:layout_marginEnd="@dimen/main_list_item_padding"
                 android:layout_marginBottom="@dimen/main_list_item_padding"
                 android:layout_toStartOf="@id/tv_videoDuration"
+                android:focusable="false"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:focusable="false"
+                    android:visibility="visible">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_avatar"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
+                        android:focusable="false"
                         android:src="@drawable/ic_avatar_gray_76dp"
                         app:civ_border_color="@color/gray"
                         app:civ_border_width="1dp" />
@@ -96,6 +103,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="2dp"
+                        android:focusable="false"
                         android:src="@drawable/ic_star_white_15dp"
                         android:visibility="gone"
                         app:civ_border_color="@color/gray"
@@ -108,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
+                    android:focusable="false"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -123,7 +132,7 @@
                         android:shadowRadius="2"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_16sp"
+                        android:textSize="@dimen/textSize_14sp"
                         app:scroll_first_delay="0"
                         app:scroll_mode="mode_once"
                         tools:text="广告裁判" />
@@ -132,11 +141,16 @@
                         android:id="@+id/tv_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:maxLines="2"
-                        android:textColor="#888888"
+                        android:layout_marginTop="2dp"
+                        android:focusable="false"
+                        android:maxLines="1"
+                        android:shadowColor="#737272"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:textColor="@color/lightGray"
                         android:textSize="@dimen/textSize_12sp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         tools:text="开眼广告精选 / #广告" />
                 </LinearLayout>
             </LinearLayout>

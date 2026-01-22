@@ -7,8 +7,10 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.qlang.eyepetizer.R
@@ -24,7 +26,7 @@ object ImageLoader {
     }
 
     @JvmStatic
-    fun <T : ImageView> loadImg(context: Context, id: String, bytes: ByteArray, imageView: T?) {
+    fun <T : ImageView> loadImg(context: Context, bytes: ByteArray, imageView: T?) {
         if (null == imageView) return
         trycatch {
             Glide.with(context).load(bytes)
@@ -56,7 +58,8 @@ object ImageLoader {
     @JvmStatic
     fun <T : ImageView> loadImg(
         context: Context, url: String, imageView: T?,
-        @DrawableRes defaultImageResId: Int, @DrawableRes errImageResId: Int
+        @DrawableRes defaultImageResId: Int,
+        @DrawableRes errImageResId: Int
     ) {
         imageView ?: return
         trycatch {
@@ -71,8 +74,10 @@ object ImageLoader {
 
     @JvmStatic
     fun loadImg(
-        context: Context, url: String, @DrawableRes defaultImageResId: Int,
-        @DrawableRes errImageResId: Int, listener: (Bitmap?) -> Unit
+        context: Context, url: String,
+        @DrawableRes defaultImageResId: Int,
+        @DrawableRes errImageResId: Int,
+        listener: (Bitmap?) -> Unit
     ) {
         trycatch {
             Glide.with(context).asBitmap().load(url)
@@ -96,7 +101,11 @@ object ImageLoader {
     }
 
     @JvmStatic
-    fun loadImg(context: Context, url: String, listener: (Bitmap?) -> Unit, error: () -> Unit?) {
+    fun loadImg(
+        context: Context, url: String,
+        listener: (Bitmap?) -> Unit,
+        error: () -> Unit?
+    ) {
         trycatch {
             Glide.with(context).asBitmap().load(url)
                 .format(DecodeFormat.PREFER_ARGB_8888)
@@ -132,7 +141,47 @@ object ImageLoader {
                 })
         }
     }
+
+    @JvmStatic
+    fun <T : ImageView> loadImg(
+        context: Context,
+        url: String,
+        imageView: T?,
+        option: RequestOptions? = null
+    ) {
+        imageView ?: return
+        trycatch {
+            Glide.with(context).load(url)
+                .apply { option?.let { apply(option) } }
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    fun <T : ImageView> loadImg(
+        context: Context,
+        url: String,
+        imageView: T?,
+        apply: (RequestBuilder<Drawable>.() -> Unit)? = null
+    ) {
+        imageView ?: return
+        trycatch {
+            Glide.with(context).load(url)
+                .apply { apply?.invoke(this) }
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .into(imageView)
+        }
+    }
 }
+
+fun ImageView.loadImg(url: String, option: RequestOptions? = null) =
+    ImageLoader.loadImg(this.context, url, this, option)
+
+fun ImageView.load(url: String, apply: (RequestBuilder<Drawable>.() -> Unit)? = {}) =
+    ImageLoader.loadImg(this.context, url, this, apply)
 
 fun ImageView.loadImg(
     url: String,
@@ -140,10 +189,7 @@ fun ImageView.loadImg(
     errImgId: Int = R.drawable.ic_default_img
 ) = ImageLoader.loadImg(this.context, url, this, defImgId, errImgId)
 
-fun ImageView.loadImg(
-    id: String,
-    bytes: ByteArray
-) = ImageLoader.loadImg(this.context, id, bytes, this)
+fun ImageView.loadImg(bytes: ByteArray) = ImageLoader.loadImg(this.context, bytes, this)
 
 fun ImageView.loadImg(block: () -> Bitmap?) = this.setImageBitmap(block())
 

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img_home_bg"
+        android:background="@color/white"
         android:clipToPadding="false"
         android:focusable="false"
         tools:context=".ui.activity.VideoDetailActivity">
@@ -18,12 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             tools:src="@drawable/img_home_bg" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#46000000" />
+            android:background="#46000000"
+            android:visibility="gone" />
 
         <com.qlang.tvwidget.TvRelativeLayout
             android:id="@+id/ly_head"
@@ -65,9 +67,9 @@
                 android:drawablePadding="8dp"
                 android:focusable="true"
                 android:paddingStart="20dp"
-                android:paddingTop="10dp"
+                android:paddingTop="8dp"
                 android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="8dp"
                 android:text="全屏"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -153,5 +155,13 @@
             tools:itemCount="2"
             tools:listitem="@layout/item_follow_card_type_small" />
 
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_nav_back" />
     </RelativeLayout>
 </layout>

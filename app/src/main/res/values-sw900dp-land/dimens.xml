@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="body_list_item_land_height">304dp</dimen>
+    <dimen name="video_detail_player_width">900dp</dimen>
+    <dimen name="video_detail_player_height">560dp</dimen>
+    <dimen name="video_detail_player_land_height">480dp</dimen>
+</resources>

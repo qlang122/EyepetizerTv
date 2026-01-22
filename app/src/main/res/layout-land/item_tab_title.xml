@@ -20,9 +20,12 @@
         android:paddingTop="@dimen/main_title_item_top_bottom_padding"
         android:paddingEnd="@dimen/main_title_item_left_right_padding"
         android:paddingBottom="@dimen/main_title_item_top_bottom_padding"
+        android:shadowColor="#646464"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
         android:textColor="@color/tab_title_focus_txt_color"
         android:textSize="@dimen/textSize_16sp"
-        android:textStyle="bold"
         tools:checked="true"
         tools:text="TITLE" />
 
