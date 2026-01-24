@@ -58,7 +58,7 @@
                 layout="@layout/item_video_detail_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_toEndOf="@id/ly_player" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ly_info"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_toEndOf="@id/ly_player"
                 android:background="@drawable/btn_bg_blue_circular"
@@ -79,7 +79,7 @@
                 android:paddingBottom="8dp"
                 android:text="全屏"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_16sp">
+                android:textSize="@dimen/textSize_18sp">
 
                 <requestFocus />
             </TextView>
@@ -103,7 +103,7 @@
                 android:paddingBottom="4dp"
                 android:text="关注"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_13sp" />
+                android:textSize="@dimen/textSize_15sp" />
 
             <TextView
                 android:id="@+id/btn_favorites"
@@ -122,7 +122,7 @@
                 android:paddingBottom="4dp"
                 android:text="收藏"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_13sp" />
+                android:textSize="@dimen/textSize_15sp" />
 
             <TextView
                 android:id="@+id/btn_cache"
@@ -140,7 +140,7 @@
                 android:paddingBottom="4dp"
                 android:text="缓存"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_13sp" />
+                android:textSize="@dimen/textSize_15sp" />
         </com.qlang.tvwidget.TvRelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -149,6 +149,8 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ly_head"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/main_list_item_padding"
+            android:layout_marginBottom="@dimen/main_list_item_padding"
             android:clipToPadding="false"
             android:focusable="false"
             android:paddingStart="@dimen/main_body_left_right_margin"
@@ -159,14 +161,21 @@
             tools:itemCount="2"
             tools:listitem="@layout/item_follow_card_type_small" />
 
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_nav_back"
-            android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_nav_back"
+                android:visibility="gone" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

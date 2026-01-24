@@ -9,6 +9,7 @@
     <dimen name="textSize_16sp">17sp</dimen>
     <dimen name="textSize_17sp">18sp</dimen>
     <dimen name="textSize_18sp">19sp</dimen>
+    <dimen name="textSize_19sp">20sp</dimen>
     <dimen name="textSize_20sp">21sp</dimen>
     <dimen name="textSize_22sp">23sp</dimen>
     <dimen name="textSize_24sp">25sp</dimen>
@@ -27,13 +28,13 @@
     <dimen name="main_list_item_padding">16dp</dimen>
     <dimen name="main_list_item_lib_icon_size">48dp</dimen>
     <dimen name="main_title_item_left_right_padding">24dp</dimen>
-    <dimen name="video_detail_player_width">600dp</dimen>
+    <dimen name="video_detail_player_width">680dp</dimen>
     <dimen name="video_detail_player_height">480dp</dimen>
-    <dimen name="video_detail_player_land_height">340dp</dimen>
+    <dimen name="video_detail_player_land_height">420dp</dimen>
     <dimen name="video_detail_info_layout_padding">24dp</dimen>
     <dimen name="video_detail_info_layout_top_padding">18dp</dimen>
     <dimen name="body_list_item_height">244dp</dimen>
     <dimen name="body_list_item_land_height">224dp</dimen>
-    <dimen name="body_list_small_item_height">200dp</dimen>
+    <dimen name="body_list_small_item_height">190dp</dimen>
     <dimen name="video_detail_list_item_left_right_margin">0dp</dimen>
 </resources>

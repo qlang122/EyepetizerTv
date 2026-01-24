@@ -25,7 +25,7 @@
         android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@color/tab_title_focus_txt_color"
-        android:textSize="@dimen/textSize_16sp"
+        android:textSize="@dimen/textSize_22sp"
         tools:checked="true"
         tools:text="TITLE" />
 

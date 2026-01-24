@@ -1,13 +1,10 @@
 package com.qlang.eyepetizer.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.ViewTreeObserver
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,12 +34,13 @@ class MainActivity : BaseVMActivity<ActivityMainBinding, MainViewModel>() {
 
     private val viewBorder by lazy {
         BorderView<RecyclerView>(this).apply {
+            getEffect<BorderEffect>()?.scale = 1.03f
             setBackgroundResource(R.drawable.item_border_bg)
         }
     }
     private val viewBorder2 by lazy {
         BorderView<RecyclerView>(this).apply {
-            getEffect<BorderEffect>()?.scale = 1.08f
+            getEffect<BorderEffect>()?.scale = 1.1f
             setBackgroundResource(R.drawable.item_border_empty_bg)
         }
     }

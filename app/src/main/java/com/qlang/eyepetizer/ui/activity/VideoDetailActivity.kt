@@ -394,7 +394,10 @@ class VideoDetailActivity : BaseVMActivity<ActivityVideoDetailBinding, VideoDeta
     }
 
     private fun showBackIcon(value: Boolean) {
-        if (!isLandScreen) return
+        if (!isLandScreen) {
+            binding?.btnBack?.isVisible = false
+            return
+        }
         binding?.btnBack?.isVisible = value
     }
 

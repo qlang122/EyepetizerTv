@@ -63,7 +63,7 @@
                 android:paddingEnd="4dp"
                 android:paddingBottom="2dp"
                 android:textColor="@color/grey"
-                android:textSize="@dimen/textSize_12sp"
+                android:textSize="@dimen/textSize_16sp"
                 tools:text="10:29" />
 
             <LinearLayout
@@ -132,7 +132,7 @@
                         android:shadowRadius="2"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_14sp"
+                        android:textSize="@dimen/textSize_17sp"
                         app:scroll_first_delay="0"
                         app:scroll_mode="mode_once"
                         tools:text="广告裁判" />
@@ -149,7 +149,7 @@
                         android:shadowDy="1"
                         android:shadowRadius="2"
                         android:textColor="@color/lightGray"
-                        android:textSize="@dimen/textSize_12sp"
+                        android:textSize="@dimen/textSize_15sp"
                         android:visibility="visible"
                         tools:text="开眼广告精选 / #广告" />
                 </LinearLayout>

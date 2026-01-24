@@ -3,8 +3,8 @@
     <dimen name="launch_logo_top">110dp</dimen>
     <dimen name="launch_bottom_text_bottom">44dp</dimen>
     <dimen name="main_title_left_right_margin">24dp</dimen>
-    <dimen name="main_title_top_margin">16dp</dimen>
-    <dimen name="main_body_left_right_margin">12dp</dimen>
+    <dimen name="main_title_top_margin">12dp</dimen>
+    <dimen name="main_body_left_right_margin">18dp</dimen>
     <dimen name="main_list_item_top_margin">16dp</dimen>
     <dimen name="main_body_top_margin">6dp</dimen>
     <dimen name="main_body_bottom_margin">16dp</dimen>

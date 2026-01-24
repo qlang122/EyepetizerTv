@@ -45,7 +45,7 @@
             android:paddingBottom="@dimen/main_body_bottom_margin"
             android:scrollbars="none"
             app:layoutManager="com.qlang.tvwidget.AutoFocusGridLayoutManager"
-            tools:itemCount="3"
+            tools:itemCount="6"
             tools:listitem="@layout/item_follow_card_type"
             tools:spanCount="3" />
 
